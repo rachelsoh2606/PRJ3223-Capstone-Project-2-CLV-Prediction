@@ -1,0 +1,150 @@
+=====================================================================
+               PIPELINE EXECUTION RAW MANIFEST MATRIX                
+=====================================================================
+
+--- SECTION 1: GRAPHICS AND METRIC FILES AUDIT MAP ---
+
+[A. EDA & Distribution Profiles Asset Map]
+  - [FOUND] age_distribution.png
+  - [FOUND] income_distribution.png
+  - [FOUND] purchase_amount_distribution.png
+  - [FOUND] satisfaction_score_distribution.png
+  - [FOUND] purchase_frequency_distribution.png
+  - [FOUND] log_income_distribution.png
+  - [FOUND] log_purchase_amount_distribution.png
+  - [FOUND] gender_distribution.png
+  - [FOUND] education_distribution.png
+  - [FOUND] region_distribution.png
+  - [FOUND] loyalty_status_distribution.png
+  - [FOUND] product_category_distribution.png
+  - [FOUND] income_treatment_comparison.png
+  - [FOUND] purchase_amount_treatment_comparison.png
+  - [FOUND] future_clv_target_distribution.png
+  - [FOUND] feature_relationship_pairplot.png
+
+[B. Variable Audit, Multicollinearity, and Cluster Segments Map]
+  - [FOUND] correlation_heatmap.png
+  - [FOUND] mutual_information_plot.png
+  - [FOUND] customer_segments_pca.png
+
+[C. Regressions and Ensemble Performance Diagnostics Map]
+  - [FOUND] model_predictions_vs_actual.png
+  - [FOUND] model_residual_distributions.png
+  - [FOUND] model_cv_stability_boxplot.png
+
+[D. Explainable AI Trajectories Matrix Map]
+  - [FOUND] shap_summary_plot.png
+  - [FOUND] loyalty_status_dependence_plot.png
+  - [FOUND] satisfaction_score_dependence_plot.png
+  - [MISSING / SKIPPED] log_income_dependence_plot.png
+  - [FOUND] feature_importance_global_comparison.png
+  - [FOUND] random_forest_permutation_plot.png
+  - [FOUND] xgboost_permutation_plot.png
+
+=====================================================================
+
+--- SECTION 2: DATA REGISTRY LOGS AND COMPUTED ARRAYS ---
+
+--- LOG 2.A: QUANTITATIVE SUMMARY COMPILATION MODULE (CHAPTER 4) ---
+                       Model  R-squared (R2)         MAE        RMSE
+Linear Regression (Baseline)        0.688515 5189.081196 6717.482351
+     Optimized Random Forest        0.999560   11.185555  252.467491
+           Optimized XGBoost        0.999881   72.322145  131.325992
+
+--- LOG 2.B: RECURSIVE VARIABLE INTERDEPENDENCY REPORT (VIF STATUS) ---
+                     Feature      VIF
+   engagement_adjusted_value 9.248405
+          avg_purchase_value 5.787475
+              loyalty_status 3.463139
+                   education 2.869605
+product_category_Electronics 2.819828
+   product_category_Clothing 2.212385
+                      gender 1.936768
+       product_category_Food 1.912460
+      product_category_Books 1.903016
+                 region_West 1.877750
+     product_category_Health 1.609564
+                region_South 1.591132
+                region_North 1.588978
+             promotion_usage 1.409785
+       product_category_Home 1.302827
+
+--- LOG 2.C: MULTI-LEVEL ALGORITHMIC PREDICTOR GAIN VECTOR (XGBOOST) ---
+                  Feature  Gini_Importance
+           loyalty_status         0.410174
+engagement_adjusted_value         0.404727
+       avg_purchase_value         0.184007
+          promotion_usage         0.001044
+              region_West         0.000014
+   product_category_Books         0.000004
+  product_category_Health         0.000004
+                education         0.000004
+             region_South         0.000004
+product_category_Clothing         0.000004
+
+--- LOG 2.D: RANDOM FOREST PERMUTATION SHUFFLE ACCURACY DECREMENT VECTORS ---
+                     Feature  Permutation_Importance_Mean
+   engagement_adjusted_value                 3.032641e+00
+          avg_purchase_value                 1.238771e+00
+              loyalty_status                 1.004332e+00
+             promotion_usage                 1.060283e-03
+                region_North                 9.170801e-07
+   product_category_Clothing                 1.710577e-07
+     product_category_Health                 9.234343e-08
+                region_South                 7.459389e-08
+      product_category_Books                 6.902300e-08
+product_category_Electronics                 3.217105e-08
+       product_category_Food                 1.208860e-08
+       product_category_Home                -1.711912e-08
+                      gender                -1.024794e-07
+                 region_West                -1.597556e-07
+                   education                -1.981322e-07
+
+--- LOG 2.E: XGBOOST PERMUTATION SHUFFLE ACCURACY DECREMENT VECTORS ---
+                     Feature  Permutation_Importance_Mean
+   engagement_adjusted_value                 3.142055e+00
+          avg_purchase_value                 1.254163e+00
+              loyalty_status                 1.008836e+00
+             promotion_usage                 1.076425e-03
+      product_category_Books                 3.097164e-08
+product_category_Electronics                 2.778657e-08
+                      gender                 2.707270e-08
+                region_North                 1.623734e-08
+       product_category_Food                 1.176409e-09
+   product_category_Clothing                -4.449386e-10
+       product_category_Home                -1.883712e-09
+                   education                -3.098420e-09
+                region_South                -1.875610e-08
+     product_category_Health                -6.064344e-08
+                 region_West                -6.891549e-07
+
+--- LOG 2.F: EXECUTIVE STRATEGIC RETENTION BLUEPRINT (TOP 10 FORECASTS) ---
+ Customer_Index  Actual_Future_CLV  Predicted_Future_CLV
+          16710           68418.47              68096.72
+          54308           66425.70              66372.97
+          76305           66425.70              66372.97
+          50007           66425.70              66348.60
+          12951           65967.79              65392.67
+          64564           65308.54              65294.40
+          78822           65706.30              64939.66
+          64819           64396.20              64070.24
+          70059           64521.60              64055.10
+          30039           64207.11              64034.15
+
+=====================================================================
+--- SECTION 3: SYSTEM INTEGRITY DIRECTORY INTEGRITY SCAN (CRITICAL SAFETY) ---
+=====================================================================
+
+[WARNING] Detected 10 unlisted/historical files on disk:
+  -> outputs/customer_clv_predictions_val.csv
+  -> outputs/distributions\clv_target_distribution.png
+  -> outputs/distributions\promotion_usage_distribution.png
+  -> outputs/mutual_information_scores.csv
+  -> outputs/permutation_importance_Random Forest.png
+  -> outputs/permutation_importance_XGBoost.png
+  -> outputs/shap_dependence\purchase_frequency_dependence_plot.png
+  -> outputs/spearman_rankings.csv
+  -> outputs/vif_before_filtering.csv
+  -> outputs/vif_table.csv
+
+Note: These elements are physical outputs that were not checked by our code logic script details.
