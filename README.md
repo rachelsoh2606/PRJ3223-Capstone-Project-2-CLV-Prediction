@@ -154,10 +154,18 @@ Using K-Means clustering ($k=3$) projected via 2D PCA, customer profiles are map
 ## ⚡ Quick Start & Setup
 
 ### 1. Environment Setup
-Clone the repository and install dependencies:
+Clone the repository, setup virtual environment, and install dependencies:
 ```bash
 git clone https://github.com/rachelsoh2606/PRJ3223-Capstone-Project-2-CLV-Prediction.git
 cd PRJ3223-Capstone-Project-2-CLV-Prediction
+
+# Create a virtual environment
+python -m venv venv
+
+# activate virtual environment
+venv\Scripts\activate
+
+# install dependencies
 pip install -r requirements.txt
 ```
 
