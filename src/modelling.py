@@ -86,7 +86,7 @@ def run_machine_learning_pipeline(X_train_scaled, X_val_scaled, X_test_scaled, y
         cv=kf,
         scoring='neg_mean_squared_error',
         random_state=42,
-        n_jobs=-1
+        n_jobs=1
     )
 
     # Train and identify the best hyperparameter combination
@@ -138,7 +138,7 @@ def run_machine_learning_pipeline(X_train_scaled, X_val_scaled, X_test_scaled, y
         cv=kf,
         scoring='neg_mean_squared_error',
         random_state=42,
-        n_jobs=-1
+        n_jobs=1
     )
 
     # Train model using optimised parameters

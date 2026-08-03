@@ -326,71 +326,118 @@ def plot_customer_segments_2d(df_scaled, df_original, output_dir="outputs"):
 
 def plot_feature_pairplot(df, output_dir="outputs"):
     """
-    Methodology Section 3.4.4: Pairwise Feature Relationship Matrix
+    Generates a pairwise relationship matrix for the key engineered CLV predictors.
 
-    Generates pairwise relationships between key features.
-    Used to identify interaction patterns among variables.
-
+    The figure is used to examine:
+    1. The distribution of each selected variable.
+    2. The relationship between Engagement-Adjusted Value and Future CLV.
+    3. The relationship between Average Purchase Value and Future CLV.
+    4. The relationship between the two engineered predictors.
+    5. Differences across low-, medium-, and high-value customer tiers.
     """
-    
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Set a clean, professional white background style suitable for academia
-    sns.set_theme(style="ticks")
-    
-    # Define the exact key variables requested
-    key_variables = ['income', 'purchase_amount', 'purchase_frequency', 'satisfaction_score', 'future_clv']
-    
-    # Verify columns exist before filtering the dataframe
-    available_cols = [col for col in key_variables if col in df.columns]
-    plot_df = df[available_cols].copy()
-    
-    # Group customers by CLV level
-    plot_df['Value Tier'] = pd.qcut(plot_df['future_clv'], q=3, labels=['Bronze (Low CLV)', 'Silver (Mid CLV)', 'Gold (High CLV)'])
-    
-    print("\n[EDA Diagnostics] Generating publication-quality pairwise relationship matrix pairplot...")
-    
-    # Generate pairwise relationship matrix
-    g = sns.pairplot(
-        plot_df, 
-        vars=available_cols,
-        hue='Value Tier',
-        palette='viridis',
-        kind='scatter',
-        diag_kind='kde',
-        height=3.0,          
-        aspect=1.1,
-        plot_kws={'alpha': 0.6, 's': 25, 'edgecolor': 'none'},
-        diag_kws={'fill': True, 'alpha': 0.5}
-    )
-    # Seaborn hides inner labels by default. We loop through the axes array grid
-    # to explicitly restore X and Y descriptions across all grid coordinates.
-    for i, row_var in enumerate(available_cols):
-        for j, col_var in enumerate(available_cols):
-            ax = g.axes[i, j]
-            if ax is not None:
-                # Format strings to clean up database underscores for the thesis presentation
-                clean_row_name = row_var.replace('_', ' ').title()
-                clean_col_name = col_var.replace('_', ' ').title()
-                
-                # Assign labels to every internal grid subplot block explicitly
-                ax.set_ylabel(clean_row_name, fontsize=9)
-                ax.set_xlabel(clean_col_name, fontsize=9)
-                
-                # Keep tick marks visible inside the grid blocks
-                ax.tick_params(axis='both', which='both', labelleft=True, labelbottom=True, labelsize=7)
 
-    # Refine titles and spacing so they match professional textbook aesthetics
-    g.fig.suptitle("Pairwise Structural Association Matrix & Target Stratification", y=1.03, fontsize=16, weight='bold')
-    sns.move_legend(g, "upper left", bbox_to_anchor=(1.01, 1.0), title="Strategic Customer Segments")
-    
+    # Create the output directory if it does not already exist
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Apply a clean plotting style suitable for academic reporting
+    sns.set_theme(style="ticks")
+
+    # Select the engineered variables discussed in the results chapter
+    key_variables = [
+        "engagement_adjusted_value",
+        "avg_purchase_value",
+        "future_clv"
+    ]
+
+    # Keep only variables that are available in the supplied DataFrame
+    available_cols = [
+        col for col in key_variables
+        if col in df.columns
+    ]
+
+    # Stop the function if there are not enough variables to form a pairplot
+    if len(available_cols) < 2:
+        print(
+            "Unable to generate pairplot: fewer than two required "
+            "variables are available."
+        )
+        return
+
+    # Create a separate copy containing only the required plotting variables
+    plot_df = df[available_cols].copy()
+
+    # Divide customers into three equally sized CLV groups using target quantiles
+    # These groups are used only for visual comparison in the pairplot
+    plot_df["Value Tier"] = pd.qcut(
+        plot_df["future_clv"],
+        q=3,
+        labels=[
+            "Bronze (Low CLV)",
+            "Silver (Mid CLV)",
+            "Gold (High CLV)"
+        ]
+    )
+
+    # Generate the pairwise matrix
+    # Scatter plots show relationships between different variables
+    # KDE plots on the diagonal show the distribution of each variable
+    g = sns.pairplot(
+        plot_df,
+        vars=available_cols,
+        hue="Value Tier",
+        palette="viridis",
+        kind="scatter",
+        diag_kind="kde",
+        height=3.0,
+        aspect=1.1,
+        plot_kws={
+            "alpha": 0.6,       # Makes overlapping customer points easier to see
+            "s": 25,            # Controls scatter-point size
+            "edgecolor": "none"
+        },
+        diag_kws={
+            "fill": True,       # Fills the KDE distribution curves
+            "alpha": 0.5
+        }
+    )
+
+    # Add an academic-style title above the full pairplot
+    g.fig.suptitle(
+        "Pairwise Relationships of Key CLV Predictors",
+        y=1.03,
+        fontsize=16,
+        weight="bold"
+    )
+
+    # Move the legend outside the graph to avoid covering the data points
+    sns.move_legend(
+        g,
+        "upper left",
+        bbox_to_anchor=(1.01, 1.0),
+        title="Customer Value Tiers"
+    )
+
+    # Improve spacing between subplots and labels
     plt.tight_layout()
-    # Save the high-resolution visualization asset
-    file_path = f"{output_dir}/feature_relationship_pairplot.png"
-    g.savefig(file_path, dpi=300, bbox_inches='tight')
+
+    # Define the output file path
+    file_path = (
+        f"{output_dir}/"
+        "key_clv_predictor_relationship_pairplot.png"
+    )
+
+    # Save a high-resolution version for the dissertation or presentation
+    g.savefig(
+        file_path,
+        dpi=300,
+        bbox_inches="tight"
+    )
+
+    # Close the figure to release memory
     plt.close()
-    
-    print(f"Pairplot feature matrix generated and saved to: {file_path}")
+
+    # Confirm where the graph was saved
+    print(f"Pairplot generated and saved to: {file_path}")
 
 # ==============================================================================
 # SECTION 3.7: MODEL EVALUATION
